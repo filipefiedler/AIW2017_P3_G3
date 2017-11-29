@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Circles</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+	div.info {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+	opacity: 0.8;
+	background-color: #7cafc0;
+    border: 1px solid #005d6d;
+
+	font-size: 18px;
+	font-family: 'Roboto','sans-serif';
+    }
+	
+    </style>
+  </head>
+  <body>
+<div id="map"></div>
+
+
+<div id="info" class="info">
+Click on the circle to see the information!
+</div>
+
+
+
+    <script>
+
+// This example creates circles on the map
+
+// First, create an object containing LatLng and population for each city.
+var citymap = {
+
+	//remember the format:
+	//id664873525564559360: {center: {lat: 41.40879414, lng: 2.1776104},color: '#0052A4',user: 'carlesapm',device: 'Instagram',time: 'Thu Nov 12 19:32:55 CET 2015',text: 'Aparicions celestials durant el rodatge de #emdicmanel #apmtv3 #estrelladammcat #igers #igersbcn� <a href="https://t.co/eYO1F5ySCp" target="_blank"> link </a>'},
+
+
+
+  id935458834587545600: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: '7starbarberbcn 935458834587545600 ·+',application: 'APP',time: 'Tue Nov 28 10:42:20 +0000 2017',text: '(SENT: NEU) �Ÿ’ˆ #buenosdias �Ÿ’ˆ�ŸŒ� �Ÿ’ˆ#7star �Ÿ’ˆHAIR CUT BY: �Ÿ—� #7starelestilistadelosbarberos #barberlove 7�Ÿ”� #latino… <a href="https://t.co/46wi1vc7zk" target="_blank"> link </a>',},
+  id935458869014417408: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: '7starbarberbcn 935458869014417408 ·+',application: 'APP',time: 'Tue Nov 28 10:42:29 +0000 2017',text: '(SENT: NEU) narrow. estrechar.���ŸŒ€���Ÿ’ˆ #buenasnoches �Ÿ’ˆ�ŸŒ� �Ÿ’ˆ#7star �Ÿ’ˆHAIR CUT BY: �Ÿ—� #7starelestilistadelosbarberos… <a href="https://t.co/QWHA9cWO9m" target="_blank"> link </a>',},
+
+  id935458902799519745: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: '7starbarberbcn 935458902799519745 ·+',application: 'APP',time: 'Tue Nov 28 10:42:37 +0000 2017',text: '(SENT: NEU) MIAMI BEACH �Ÿ���Ÿ’ˆ #buenosdias �Ÿ’ˆ�ŸŒ� �Ÿ’ˆ#7star �Ÿ’ˆHAIR CUT BY: �Ÿ—� #7starelestilistadelosbarberos #barberlove… <a href="https://t.co/oJRVae1OSC" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+  id935459331792805890: {center: {lat: 41.3797, lng: 2.17528},color: '#FFFF00',user: 'GabrielPeso_ 935459331792805890 ·+',application: 'APP',time: 'Tue Nov 28 10:44:19 +0000 2017',text: '(SENT: NEU) Fant��stica noche la de ayer en el Jamboree. ��Qu�� bien lo pasamos!�Ÿ˜ƒ #Hendrix #Glamour #Jamboree… <a href="https://t.co/Yn9v0cXQCf" target="_blank"> link </a>',},
+
+
+
+  id935459510210187264: {center: {lat: 41.385064, lng: 2.173403},color: '#5F005F',user: 'toolows 935459510210187264 ·+',application: 'APP',time: 'Tue Nov 28 10:45:01 +0000 2017',text: '(SENT: NEG) Uber busca calmar a reguladores alrededor de mundo tras crisis de reputaci��n <a href="https://t.co/Ce1FGvb6NL" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id935460717414834176: {center: {lat: 41.40461, lng: 2.15437},color: '#5F005F',user: 'LittleMiss_Bcn 935460717414834176 ·+',application: 'APP',time: 'Tue Nov 28 10:49:49 +0000 2017',text: '(SENT: NEG) Una ma��ana diferente en kangura_portabebes donde Mar _mar_mmm , asesora de porteo, me est��… <a href="https://t.co/vUYsQXq4W9" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id935460923778715648: {center: {lat: 41.3879, lng: 2.16992},color: '#FFFF00',user: 'TrendsBarcelona 935460923778715648 ·+',application: 'APP',time: 'Tue Nov 28 10:50:38 +0000 2017',text: '(SENT: NEU) #votxtothom es ahora una tendencia en #Barcelona  <a href="https://t.co/3rZ4NtK5gJ" target="_blank"> link </a><a href="https://t.co/pWfHqMr2KV" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+  id935627421885321218: {center: {lat: 41.39360597, lng: 2.17296309},color: '#FFFF00',user: 'barberbcn 935627421885321218 ·+',application: 'APP',time: 'Tue Nov 28 21:52:15 +0000 2017',text: '(SENT: NEU) Transmitir. Compartir. Inspirar y enseñar. Esto y mucho más es para mi la formación.  Última del… <a href="https://t.co/IS0sqsMoGv" target="_blank"> link </a>',},
+
+
+  id935627508258570241: {center: {lat: 41.3970399, lng: 2.1607},color: '#00FF80',user: 'ILikeDisco 935627508258570241 ·+',application: 'APP',time: 'Tue Nov 28 21:52:35 +0000 2017',text: '(SENT: POS) I’ve not taken as many records I’d like to but I’m glad I’ve took #finalcredits to #Barcelona em… <a href="https://t.co/okkezjVX0T" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+  id935627673061040128: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627673061040128 ·+',application: 'APP',time: 'Tue Nov 28 21:53:15 +0000 2017',text: '(SENT: NEU)  Theo  apareix en aquest moment com Trending Topic (7). Mes tendències <a href="https://t.co/mU6NpaPgbF" target="_blank"> link </a>#trndnl <a href="https://t.co/c16cA4D2D1" target="_blank"> link </a>',},
+  id935627677913849856: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627677913849856 ·+',application: 'APP',time: 'Tue Nov 28 21:53:16 +0000 2017',text: '(SENT: NEU) #MalasCompañías3 apareix en aquest moment com Trending Topic (3). Mes tendències <a href="https://t.co/mU6NpaPgbF" target="_blank"> link </a>#trndnl <a href="https://t.co/ybhjbdy1WB" target="_blank"> link </a>',},
+
+  id935627692568821760: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627692568821760 ·+',application: 'APP',time: 'Tue Nov 28 21:53:19 +0000 2017',text: '(SENT: NEU)  Tottenham  just started trending with 25621 tweets. More trends at <a href="https://t.co/mU6NpaPgbF" target="_blank"> link </a>#trndnl ',},
+
+
+  id935627732309835776: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627732309835776 ·+',application: 'APP',time: 'Tue Nov 28 21:53:29 +0000 2017',text: '(SENT: NEU) @MalasCiasTV la 1a menció de #MalasCompañías3 apareix al teu TL. Ara es tendència a Barcelona! #trndnl ',},
+
+
+
+
+  id935627768049496064: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627768049496064 ·+',application: 'APP',time: 'Tue Nov 28 21:53:37 +0000 2017',text: '(SENT: NEU) 560 usuaris i 605 tuits (556 RTs) durant 1 semana van convertir #MalasCompañías3 en Tendència. #trndnl ',},
+  id935627770968731648: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627770968731648 ·+',application: 'APP',time: 'Tue Nov 28 21:53:38 +0000 2017',text: '(SENT: NEU) 4015703 persones podrien haver vist #MalasCompañías3 des de la seva 1a menció fins esdevenir Tendència. #trndnl ',},
+  id935627772898058240: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627772898058240 ·+',application: 'APP',time: 'Tue Nov 28 21:53:38 +0000 2017',text: '(SENT: NEU) #Top3Apps mentre #MalasCompañías3 es convertia en Tendència  Twitter for Android 46% Twitter for iPhone 27% Twitter Web Client 10% ',},
+  id935627774768816130: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935627774768816130 ·+',application: 'APP',time: 'Tue Nov 28 21:53:39 +0000 2017',text: '(SENT: NEU) The tweet with the most impact of the #MalasCompañías3 Trend, was published by @jordievole: <a href="https://t.co/bn9mdi6CxR" target="_blank"> link </a>(97 RTs) #trndnl ',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id935628886876057607: {center: {lat: 41.3879, lng: 2.16992},color: '#FFFF00',user: 'TrendsBarcelona 935628886876057607 ·+',application: 'APP',time: 'Tue Nov 28 21:58:04 +0000 2017',text: '(SENT: NEU) #malascompañías3 es ahora una tendencia en #Barcelona  <a href="https://t.co/Ne23fFXIyX" target="_blank"> link </a><a href="https://t.co/KVcaHCCEGx" target="_blank"> link </a>',},
+  id935628922158493698: {center: {lat: 41.3879, lng: 2.16992},color: '#FFFF00',user: 'TrendsBarcelona 935628922158493698 ·+',application: 'APP',time: 'Tue Nov 28 21:58:12 +0000 2017',text: '(SENT: NEU) #firstdates494 es ahora una tendencia en #Barcelona  <a href="https://t.co/JLcS8X0BDe" target="_blank"> link </a><a href="https://t.co/fMhv1RDM9L" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id935629379786420225: {center: {lat: 41.37513333, lng: 2.17629667},color: '#FFFF00',user: 'MissMarkovnikov 935629379786420225 ·+',application: 'APP',time: 'Tue Nov 28 22:00:01 +0000 2017',text: '(SENT: NEU) "The breath of the greatest dragon forged the Iron Throne...the swords of the vanquished, a… <a href="https://t.co/l280eZL0fY" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+  id935629545348259840: {center: {lat: 41.39924975, lng: 2.20587935},color: '#FFFF00',user: 'contigomismo 935629545348259840 ·+',application: 'APP',time: 'Tue Nov 28 22:00:41 +0000 2017',text: '(SENT: NEU) Momentos para compartir, contigo... fotografiando grafitis! ;)  #contigomismo #contigo #amor… <a href="https://t.co/3rkyk4ygyQ" target="_blank"> link </a>',},
+
+
+  id935629609844072448: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: 'soniaa4 935629609844072448 ·+',application: 'APP',time: 'Tue Nov 28 22:00:56 +0000 2017',text: '(SENT: NEU) Y seguir celebrando año tras año rodeada de gente maravillosa   #tumblrpic #tumblrpost… <a href="https://t.co/uYrYe39xMq" target="_blank"> link </a>',},
+
+
+
+  id935629690609504257: {center: {lat: 41.4183456, lng: 2.12771077},color: '#5F005F',user: 'NicoCastells 935629690609504257 ·+',application: 'APP',time: 'Tue Nov 28 22:01:16 +0000 2017',text: '(SENT: NEG) Paseo por las aguas #mtb #earlyride #sunrise #routine #bcn #cold… <a href="https://t.co/PmApVkj7GY" target="_blank"> link </a>',},
+
+
+  id935629892544290817: {center: {lat: 41.475596, lng: 2.0847222},color: '#FFFF00',user: 'vidadegos_com 935629892544290817 ·+',application: 'APP',time: 'Tue Nov 28 22:02:04 +0000 2017',text: '(SENT: NEU) #teckel #monisimo #perros #estilismocanino #santcugat en Vida de Gos <a href="https://t.co/7ZCgSVJA0A" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+  id935630028557168641: {center: {lat: 41.40470848, lng: 2.15709786},color: '#FFFF00',user: 'contigomismo 935630028557168641 ·+',application: 'APP',time: 'Tue Nov 28 22:02:36 +0000 2017',text: '(SENT: NEU) #contigomismo #contigo #rinconessingulares #nofilter #instagramers #thebestphoto #cataluña… <a href="https://t.co/R02O01JLrH" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id935630140779798528: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935630140779798528 ·+',application: 'APP',time: 'Tue Nov 28 22:03:03 +0000 2017',text: '(SENT: NEU)  Theo  apareix en aquest moment com Trending Topic (7). Mes tendències <a href="https://t.co/mU6NpaPgbF" target="_blank"> link </a>#trndnl <a href="https://t.co/CHhxu9O14z" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+  id935630380643901443: {center: {lat: 41.3020956, lng: 1.9915212},color: '#FFFF00',user: 'JordiCalvera 935630380643901443 ·+',application: 'APP',time: 'Tue Nov 28 22:04:00 +0000 2017',text: '(SENT: NEU) Precariedad y desigualdad pero crecemos un 3% verdad @marianorajoy ¿? El peor momento en manos de los peores @PPopular ',},
+
+  id935630435002011650: {center: {lat: 41.40333008, lng: 2.12122084},color: '#00FF80',user: 'DBA1010 935630435002011650 ·+',application: 'APP',time: 'Tue Nov 28 22:04:13 +0000 2017',text: '(SENT: POS) By @elena_adell 🔝🙌🏻 #proud exalumne esht_santignasi jesuitesfp ara a sant_croi i col.labora al… <a href="https://t.co/lQEKhHLZ42" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id935630538873774080: {center: {lat: 41.3857, lng: 2.17},color: '#FFFF00',user: 'trendinaliaBCN 935630538873774080 ·+',application: 'APP',time: 'Tue Nov 28 22:04:38 +0000 2017',text: '(SENT: NEU)  Theo  apareix en aquest moment com Trending Topic (7). Mes tendències <a href="https://t.co/mU6NpaPgbF" target="_blank"> link </a>#trndnl <a href="https://t.co/ueRv1hxTCu" target="_blank"> link </a>',},
+  id935630544959918080: {center: {lat: 41.40470848, lng: 2.15709786},color: '#FFFF00',user: 'contigomismo 935630544959918080 ·+',application: 'APP',time: 'Tue Nov 28 22:04:39 +0000 2017',text: '(SENT: NEU) #contigomismo #contigo #rinconessingulares #nofilter #instagramers #thebestphoto #cataluña… <a href="https://t.co/zLpPxdy6SP" target="_blank"> link </a>',},
+
+
+
+
+
+  id935630657111261189: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: 'RachelAllan 935630657111261189 ·+',application: 'APP',time: 'Tue Nov 28 22:05:06 +0000 2017',text: '(SENT: NEU) Sorry we had to repost to get these fab shoes jamienkidd paired with our Couture Style 8319!… <a href="https://t.co/i9MWCyYWsP" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id935630887538085888: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: 'emontagut 935630887538085888 ·+',application: 'APP',time: 'Tue Nov 28 22:06:01 +0000 2017',text: '(SENT: NEU) Tarde de libros en familia #oscar #pau ❤️👬 en Barcelona, Spain <a href="https://t.co/vOzkGGa6dH" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id935631093528641536: {center: {lat: 41.39517971, lng: 2.15233098},color: '#FFFF00',user: 'lunatic48 935631093528641536 ·+',application: 'APP',time: 'Tue Nov 28 22:06:50 +0000 2017',text: '(SENT: NEU) 오늘은 이거 ㅋㅋ 병맥 사놓고 병따개없어서 프론트에 빌리러감 #beer #자기위한수단 spain Barcelona <a href="https://t.co/SiDONPeaHh" target="_blank"> link </a>',},
+
+
+
+
+
+  id935631172473905154: {center: {lat: 41.38419063, lng: 2.17345834},color: '#FFFF00',user: 'blockshopbcn 935631172473905154 ·+',application: 'APP',time: 'Tue Nov 28 22:07:09 +0000 2017',text: '(SENT: NEU) Coming Soon⚡Mask Off Ltd Tee x Block Limited⚡Blockerz From Paris to Barcelona // Independant… <a href="https://t.co/DvX9TGl14W" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id935631293899051009: {center: {lat: 41.41907088, lng: 2.16162572},color: '#FFFF00',user: 'veromf90 935631293899051009 ·+',application: 'APP',time: 'Tue Nov 28 22:07:38 +0000 2017',text: '(SENT: NEU) A veces quisiera decirte que me ganaste batallas que ya había perdido, que no entiendo el mundo… <a href="https://t.co/DsrjBr8VCQ" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id935631438421954561: {center: {lat: 41.3828939, lng: 2.1774322},color: '#FFFF00',user: 'worldfrontpage 935631438421954561 ·+',application: 'APP',time: 'Tue Nov 28 22:08:12 +0000 2017',text: '(SENT: NEU) La Vanguardia Barcelona, Spain Tuesday, November 28, 2017 <a href="https://t.co/nwrTT0hfmf" target="_blank"> link </a><a href="https://t.co/xx5GH5ahX2" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id935632390784917504: {center: {lat: 41.39924975, lng: 2.20587935},color: '#FFFF00',user: 'monicalluc 935632390784917504 ·+',application: 'APP',time: 'Tue Nov 28 22:11:59 +0000 2017',text: '(SENT: NEU) #graffiti #poblenou #estimoelmeubarri en Poblenou <a href="https://t.co/B6KQ4Eietg" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+  id935632749175611392: {center: {lat: 41.40470848, lng: 2.15709786},color: '#5F005F',user: 'contigomismo 935632749175611392 ·+',application: 'APP',time: 'Tue Nov 28 22:13:25 +0000 2017',text: '(SENT: NEG) Señales de mi Alma, contigo... de vez en cuando hay grafittis con figuras femeninas que me hacen… <a href="https://t.co/Mfqc5qu5bs" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+  id935740805117087744: {center: {lat: 41.37591, lng: 2.18924},color: '#5F005F',user: 'indiandutch 935740805117087744 ·+',application: 'APP',time: 'Wed Nov 29 05:22:47 +0000 2017',text: '(SENT: NEG) Yum yum. 4 of my faves: Spanish tortilla, pan con tomate 🍅, cheese… <a href="https://t.co/lgGnsZrcKG" target="_blank"> link </a>',},
+
+
+
+  id935741909410177024: {center: {lat: 41.39924975, lng: 2.20587935},color: '#FFFF00',user: '64erNagetier 935741909410177024 ·+',application: 'APP',time: 'Wed Nov 29 05:27:11 +0000 2017',text: '(SENT: NEU) „Unser“ #Barcelona @corinnarennt @ Poblenou <a href="https://t.co/KSeRITxYBp" target="_blank"> link </a>',},
+
+
+
+  id935742449808564227: {center: {lat: 41.3857, lng: 2.17},color: '#5F005F',user: 'trendinaliaBCN 935742449808564227 ·+',application: 'APP',time: 'Wed Nov 29 05:29:19 +0000 2017',text: '(SENT: NEG) Només 4 caràcters tenia el Trending Topic més curt del dimarts 28 a Barcelona: <a href="https://t.co/ndRAJvhpr0" target="_blank"> link </a>#trndnl ',},
+
+  id935742555479830529: {center: {lat: 41.3833, lng: 2.18333},color: '#00FF80',user: 'jjbeh 935742555479830529 ·+',application: 'APP',time: 'Wed Nov 29 05:29:45 +0000 2017',text: '(SENT: POS) That night on the roof in Spain was quite enjoyable! @tonjebrubak focus_on_one_thing #emag2017 @… <a href="https://t.co/whRU0HCzyh" target="_blank"> link </a>',},
+
+
+
+
+
+  id935743538800807936: {center: {lat: 41.4186976, lng: 2.1768027},color: '#FFFF00',user: 'BollySongs_BCN 935743538800807936 ·+',application: 'APP',time: 'Wed Nov 29 05:33:39 +0000 2017',text: '(SENT: NEU) "@RedChilliesEnt: Leave the things that weigh you down and soar high!   @iamsrk @TheMahiraKhan <a href="https://t.co/0YmdeQB1OE"" target="_blank"> link </a>Aixxxxxxxx! ',},
+
+
+
+
+
+  id935744370493534208: {center: {lat: 41.3824734, lng: 2.1856404},color: '#5F005F',user: 'ayyeeejayyeee 935744370493534208 ·+',application: 'APP',time: 'Wed Nov 29 05:36:57 +0000 2017',text: '(SENT: NEG) I shall not be bogged by this injury. Take it one day at a time. @ Barceloneta <a href="https://t.co/Ers7MOCGAj" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id935745673026244608: {center: {lat: 41.4186976, lng: 2.1768027},color: '#5F005F',user: 'BollySongs_BCN 935745673026244608 ·+',application: 'APP',time: 'Wed Nov 29 05:42:08 +0000 2017',text: '(SENT: NEG) Oda a @SrBachchan  Moltes rupees a Panamá Moltes rupees al Paradís Ningú diu res  Ets del PP? Ets "A.Bachchan"?  No t enfadis,angry abuelico ',},
+  id935746174379855873: {center: {lat: 41.44831467, lng: 2.19762492},color: '#FFFF00',user: 'InformacionDGT 935746174379855873 ·+',application: 'APP',time: 'Wed Nov 29 05:44:07 +0000 2017',text: '(SENT: NEU) #RETENCIÓN nivel AMARILLO en #B20 (pk 16.5 al 17.5 sur) SANTA COLOMA DE GRAMENET #DGTBarcelona #DGT <a href="https://t.co/hTWHsSXUJn" target="_blank"> link </a>',},
+
+  id935746634377461762: {center: {lat: 41.4186976, lng: 2.1768027},color: '#5F005F',user: 'BollySongs_BCN 935746634377461762 ·+',application: 'APP',time: 'Wed Nov 29 05:45:57 +0000 2017',text: '(SENT: NEG) Oda a @SrBachchan  Moltes rupees a Panamà Moltes rupees al Paradís Ningú diu res  Ets del PP? Ets "A.Bachchan"?  No t enfadis,angry abuelico ',},
+
+
+
+
+
+
+
+
+
+
+  id935748310203236352: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: 'ELECTRONOOBS 935748310203236352 ·+',application: 'APP',time: 'Wed Nov 29 05:52:37 +0000 2017',text: '(SENT: NEU) First FPV connection. The Goggles have both directional and mushroom antennas and the FuriBee… <a href="https://t.co/sNLdQTf4TS" target="_blank"> link </a>',},
+
+
+
+  id935748711178752001: {center: {lat: 41.39297485, lng: 2.20299911},color: '#FFFF00',user: 'InformacionDGT 935748711178752001 ·+',application: 'APP',time: 'Wed Nov 29 05:54:12 +0000 2017',text: '(SENT: NEU) #RETENCIÓN nivel AMARILLO en #B10 (pk 8 al 6 sur) BARCELONA #DGTBarcelona #DGT <a href="https://t.co/kLG3tzr8FY" target="_blank"> link </a>',},
+
+
+  id935749115375472640: {center: {lat: 41.3833, lng: 2.18333},color: '#FFFF00',user: 'XoLolotte 935749115375472640 ·+',application: 'APP',time: 'Wed Nov 29 05:55:49 +0000 2017',text: '(SENT: NEU) Christmas is coming soon 🎄😍🎄  Très bon petit weekend pour moi, vos fêtes de Noël l se préparent… <a href="https://t.co/hxm4H2Xf2o" target="_blank"> link </a>',},
+
+  id935749299274731520: {center: {lat: 41.4186976, lng: 2.1768027},color: '#FFFF00',user: 'Bolly_Babilonia 935749299274731520 ·+',application: 'APP',time: 'Wed Nov 29 05:56:32 +0000 2017',text: '(SENT: NEU) @BollySongs_BCN @SrBachchan Qué desastre! Qué mal todo! ',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id935750868263211008: {center: {lat: 41.37135396, lng: 2.15160308},color: '#FFFF00',user: 'manelctz 935750868263211008 ·+',application: 'APP',time: 'Wed Nov 29 06:02:47 +0000 2017',text: '(SENT: NEU) Curve #mnac #montjuic #barcelona #catalunya #asi_es_hdr #destinationearth #fotografia… <a href="https://t.co/VzqcPwO8Ms" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+};
+
+function showNewRect(user, device, time, text) {
+  	//alert(this.fillColor);
+	//alert(x);
+	document.getElementById('info').innerHTML = 
+							"<b>User:</b> <a href=\"https://twitter.com/"+user+"\" target=\"_blank\">"+user+"</a>"+
+							'<br><b>Application: </b>' + device +
+							'<br><b>Time: </b>' + time +
+							'<br><b>Text: </b>' + text;
+                                      
+}
+
+function initMap() {
+  // Create the map.
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: {lat: 41.403184, lng: 2.187346},
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  // Construct the circle for each value in citymap.
+  // Note: We scale the area of the circle based on the population.
+  for (var city in citymap) {
+    // Add the circle for this city to the map.
+    var cityCircle = new google.maps.Circle({
+      strokeColor: citymap[city].color,
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: citymap[city].color,
+      fillOpacity: 0.35,
+      map: map,
+      center: citymap[city].center,
+      radius: 50
+    });
+
+	//cityCircle.addListener('click', showNewRect);
+
+ 	var createCallback = function(innerCity){
+    	return function() {showNewRect(	citymap[innerCity].user,
+										citymap[innerCity].device,
+										citymap[innerCity].time, 
+										citymap[innerCity].text);};
+	};
+
+    cityCircle.addListener("click", createCallback(city), false);
+
+  }
+
+}
+
+var createAdd = function () {
+    var counter = 0;
+    return function () {return counter += 1;}
+};
+
+var add = createAdd();
+
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE&signed_in=true&callback=initMap"></script>
+  </body>
+</html>
