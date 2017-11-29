@@ -167,13 +167,9 @@ public class CreateMapToWork {
                         MapsUtils.createNewMap(inputFileHeat, textToWriteHeat);
                         MapsUtils.createNewMap(inputFileCircle, textToWriteCircle);
                         
-                } catch (ResourceInstantiationException ex) {
-                Logger.getLogger(CreateFromAnalysis.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(CreateFromAnalysis.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (GateException ex) {
-                Logger.getLogger(CreateFromAnalysis.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                } catch (Exception e){
+                    
+                }
 	}
         // EXAMPLE OF EXTRACTION
         public static int NumLocs(Document doc) {
