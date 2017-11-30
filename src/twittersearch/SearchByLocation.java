@@ -45,10 +45,11 @@ public class SearchByLocation {
 
 	private static Logger logger = Logger.getLogger(SearchByLocation.class.getName());
         
-	public static final String yourAccessToken="";
-        public static final String yourAccessTokenSecret="";
-        public static final String yourConsumerKey="";
-        public static final String yourConsumerKeySecret="";
+        public static final String yourAccessToken="3385271351-uO49fpva4vP3wLg9nHBPE9mRuwEKRA6jPfFkhQ8";
+        public static final String yourAccessTokenSecret="W7CpquOjuRCbeF8yMfCwXR59VEuTEegjwrwpvmaltBgDK";
+        public static final String yourConsumerKey="zdBMjmvxEpoEjoYNy5ySWvF1Q";
+        public static final String yourConsumerKeySecret="XwHuPco1wdz5aFH3lEfBg3ufkBgOltZ3mhgiCh01fnuzTCVVnK";
+
 	
 	public static void main(String[] args) {
 		
@@ -81,7 +82,9 @@ public class SearchByLocation {
 
                 // -- filter specific geografic area
                 //double[][] locations = {{0.440658, 40.885126}, {3.731063, 42.367324}}; //catalunia
-                double[][] locations = {{2.173393964767456, 41.402976092440085}, {2.1751266717910767, 41.40417515144866}}; //sagrada familia
+                //double[][] locations = {{2.173393964767456, 41.402976092440085}, {2.1751266717910767, 41.40417515144866}}; //sagrada familia
+                double[][] locations = {{2.169499397277832, 41.37593908538199}, {2.1776533126831055, 41.38605010106108}}; //Las Ramblas
+                
                 
                 fq.locations(locations);
 

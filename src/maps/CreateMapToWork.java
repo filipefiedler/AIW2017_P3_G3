@@ -50,7 +50,7 @@ public class CreateMapToWork {
 		try {
                     Gate.init();
                     String encoding = "UTF-8";
-                    File inDir=new File("./data/analysed");
+                    File inDir=new File("./resources/annotatedTweets");
                     File[] flist=inDir.listFiles();
                     String floc;
                
@@ -94,14 +94,14 @@ public class CreateMapToWork {
                         newTextHeat = "";
                         newTextCircle= "";
                         floc=flist[f].getAbsolutePath();
-                        System.out.println(floc);
                         d=Factory.newDocument(new URL("file:///"+floc), encoding);
                         tweets=d.getAnnotations("Original markups").get("Tweet");
                         tweet=tweets.iterator().next();
                         fm=tweet.getFeatures();
                         mp=(Map<Object, Object>) fm.get("geo");
                         mp_usr=(Map<Object, Object>) fm.get("user");
-                        id=(String) fm.get("id");
+                        Long auxId = (Long) fm.get("id");
+                        id=Long.toString(auxId);
                         creation=(String) fm.get("created_at");
                         usrName=(String) mp_usr.get("screen_name");
                         
@@ -114,12 +114,28 @@ public class CreateMapToWork {
                             lati=coordinates.get(0);
                             longi=coordinates.get(1);
                             num_locs=NumLocs(d);
-                            // TO COMPLETE compute number of URLs
-                            // TO COMPLETE compute number of Person(s)
-                            // TO COMPLETE compute number of Organization(s)
                             
-                            // TO COMPLETE  Compute sentiment of tweet
+                            //Compute number of URLs
+                            URLs=d.getAnnotations("").get("URL");
+                            num_urls = URLs.size();
+                            //System.out.println(num_urls + "URLs");
+                            
+                            //Compute number of Person(s)
+                            persons = d.getAnnotations("").get("Person");
+                            num_pers = persons.size();
+                            //System.out.println(num_pers + "people");
+                            
+                            //Compute number of Organization(s)
+                            orgs = d.getAnnotations("").get("Organization");
+                            num_orgs = orgs.size();
+                            //System.out.println(num_pers + "organizations");
+                            
+                            //Compute sentiment of tweet
                             sentiLabel=Sentiment(d);
+                            
+                            if(sentiLabel.equals("positive") | sentiLabel.equals("negative")){
+                               System.out.println(sentiLabel + " :" + floc);
+                            }
                             
                             //---- HEAT MAP ----
                             newTextHeat = "new google.maps.LatLng("+lati+","+longi+"),";
@@ -157,8 +173,8 @@ public class CreateMapToWork {
                     
                    
                     
-                    String inputFileHeat = "maps"+fs+ "heat-map.html";
-                    String inputFileCircle = "maps"+fs+ "circle-map.html";
+                    String inputFileHeat = "resources" + fs + "maps"+fs+ "heat-map.html";
+                    String inputFileCircle = "resources" + fs + "maps"+fs+ "circle-map.html";
                     
                   
                               
@@ -187,10 +203,22 @@ public class CreateMapToWork {
             String label;
             while(ite.hasNext()) {
                 // compute sentiment value
-                
+                lookup=ite.next();
+                fm=lookup.getFeatures();
+                label = (String) fm.get("majorType");
+                if(label.equals("positive")){
+                    senti++;
+                } else if (label.equals("negative")){
+                    senti--;
+                }
             }
-            // TO COMPLETE compute sentiment label according to senti value
-            // IF STATMENT HERE
+            if(senti<0){
+                sentiment = "negative";
+            } else if (senti > 0) {
+                sentiment = "positive";
+            } else {
+                sentiment = "neutral";
+            }
             return sentiment;
         }
 }
