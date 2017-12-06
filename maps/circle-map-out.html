@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Circles</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+	div.info {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+	opacity: 0.8;
+	background-color: #7cafc0;
+    border: 1px solid #005d6d;
+
+	font-size: 18px;
+	font-family: 'Roboto','sans-serif';
+    }
+	
+    </style>
+  </head>
+  <body>
+<div id="map"></div>
+
+
+<div id="info" class="info">
+Click on the circle to see the information!
+</div>
+
+
+
+    <script>
+
+// This example creates circles on the map
+
+// First, create an object containing LatLng and population for each city.
+var citymap = {
+
+	//remember the format:
+	//id664873525564559360: {center: {lat: 41.40879414, lng: 2.1776104},color: '#0052A4',user: 'carlesapm',device: 'Instagram',time: 'Thu Nov 12 19:32:55 CET 2015',text: 'Aparicions celestials durant el rodatge de #emdicmanel #apmtv3 #estrelladammcat #igers #igersbcn� <a href="https://t.co/eYO1F5ySCp" target="_blank"> link </a>'},
+
+
+
+  id936179529294508032: {center: {lat: 41.38221, lng: 2.18271},color: 'yellow',user: 'labcnquemegusta 936179529294508032 ·+',application: '???',time: 'Thu Nov 30 10:26:07 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) ¡Lugares parados en el tiempo donde conocer las primeras obras de artistas de gran renombre como… <a href="https://t.co/h69vVPUdgm" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id936198998083407872: {center: {lat: 41.3879, lng: 2.16992},color: 'yellow',user: 'TrendsBarcelona 936198998083407872 ·+',application: '???',time: 'Thu Nov 30 11:43:29 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 1, ORG: 0, URL: 2) El Suplement, @elsuplement es ahora una tendencia en #Barcelona  <a href="https://t.co/5p3k6BZ0Vj" target="_blank"> link </a><a href="https://t.co/VkdmlgDdHq" target="_blank"> link </a>',},
+  id936199033332346887: {center: {lat: 41.3879, lng: 2.16992},color: 'yellow',user: 'TrendsBarcelona 936199033332346887 ·+',application: '???',time: 'Thu Nov 30 11:43:37 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 1, ORG: 0, URL: 2)  ibex-35  es ahora una tendencia en #Barcelona  <a href="https://t.co/FAupuLrne2" target="_blank"> link </a><a href="https://t.co/xCasKuSOSj" target="_blank"> link </a>',},
+  id936199051829268480: {center: {lat: 41.40384119, lng: 2.17477798},color: 'yellow',user: 'rickelsucio 936199051829268480 ·+',application: '???',time: 'Thu Nov 30 11:43:42 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) Just posted a photo @ Basílica de la Sagrada Família <a href="https://t.co/rolIhcqbZS" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+  id936199372206936065: {center: {lat: 41.402417, lng: 2.163444},color: 'yellow',user: 'catalaMaulet 936199372206936065 ·+',application: '???',time: 'Thu Nov 30 11:44:58 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) #toninadal17 en Eixample <a href="https://t.co/u7HZDjZwet" target="_blank"> link </a>',},
+  id936199382680121344: {center: {lat: 41.385064, lng: 2.173403},color: 'yellow',user: 'toolows 936199382680121344 ·+',application: '???',time: 'Thu Nov 30 11:45:01 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 1, ORG: 0, URL: 1) Conectando con los adolescentes: Cómo vender a la Generación Z <a href="https://t.co/hoUpWR33IA" target="_blank"> link </a>',},
+
+  id936199410882670592: {center: {lat: 41.3789572, lng: 2.1538879},color: 'yellow',user: 'marisa_marisa10 936199410882670592 ·+',application: '???',time: 'Thu Nov 30 11:45:07 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) ¿Cuando dejara de hacer el ridiculo el ex president de la Generalitat? <a href="https://t.co/rcEOHLl3KA" target="_blank"> link </a>',},
+
+
+
+
+  id936199578789011456: {center: {lat: 41.4192096, lng: 2.16183113},color: 'green',user: 'marionsks 936199578789011456 ·+',application: '???',time: 'Thu Nov 30 11:45:47 +0000 2017',text: '(SENT: POS, LOC: 3, PER: 0, ORG: 0, URL: 1) #tbt#now#me#girl#french#france#like#love#likforlike#myself#bunkers#top#barcelona#spain#catalunya#… <a href="https://t.co/NWXz7F5wh0" target="_blank"> link </a>',},
+
+
+
+  id936199735341350914: {center: {lat: 41.3833, lng: 2.18333},color: 'red',user: 'mosamaimages 936199735341350914 ·+',application: '???',time: 'Thu Nov 30 11:46:25 +0000 2017',text: '(SENT: NEG, LOC: 0, PER: 0, ORG: 0, URL: 1) I ve been inconsistent with my workout over the last two weeks!! On the plus side I have mostly… <a href="https://t.co/wPz4BA9TQ6" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id936200649540362241: {center: {lat: 41.385064, lng: 2.173403},color: 'yellow',user: 'toolows 936200649540362241 ·+',application: '???',time: 'Thu Nov 30 11:50:03 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) Por qué la neurociencia dice que no todos los anuncios de la Navidad deberían hacer llorar <a href="https://t.co/YVIO3ikJbK" target="_blank"> link </a>',},
+  id936200656280608770: {center: {lat: 41.38277778, lng: 2.17694444},color: 'yellow',user: 'ellyn_daniels 936200656280608770 ·+',application: '???',time: 'Thu Nov 30 11:50:04 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) Preparing for tonight’s sold out show of Emotional Terrorism  sohohousebarcelona ....… <a href="https://t.co/ibvofksN95" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id936201560761294849: {center: {lat: 41.3833, lng: 2.18333},color: 'yellow',user: 'taralstevens 936201560761294849 ·+',application: '???',time: 'Thu Nov 30 11:53:40 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) You can t beat early morning, end of November, light. See you next time Barna. You ve been… <a href="https://t.co/M9mFAIAKIs" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id936201883005353984: {center: {lat: 41.39619, lng: 2.15723},color: 'yellow',user: 'fsoleronline 936201883005353984 ·+',application: '???',time: 'Thu Nov 30 11:54:57 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 1, ORG: 0, URL: 1) En el programa de hoy tuvimos a los chicos de itv Fitness itvfitness y la compañía de carlos de… <a href="https://t.co/YbmQ4fIQIp" target="_blank"> link </a>',},
+
+  id936201946314231808: {center: {lat: 41.3833, lng: 2.18333},color: 'yellow',user: 'simonjalit 936201946314231808 ·+',application: '???',time: 'Thu Nov 30 11:55:12 +0000 2017',text: '(SENT: NEU, LOC: 2, PER: 0, ORG: 0, URL: 1) Inmejorable 👏👌 en Barcelona, Spain <a href="https://t.co/c5LTx5FP58" target="_blank"> link </a>',},
+
+  id936202031349555201: {center: {lat: 41.39518, lng: 2.16596},color: 'green',user: 'ArturBossyLluch 936202031349555201 ·+',application: '???',time: 'Thu Nov 30 11:55:32 +0000 2017',text: '(SENT: POS, LOC: 1, PER: 0, ORG: 0, URL: 1) Isn it cool? Wiod designed by @arturbossylluch and peppinobonarelli . Only in Barcelona.… <a href="https://t.co/idnxYyzMjs" target="_blank"> link </a>',},
+
+
+
+
+
+  id936202162786496512: {center: {lat: 41.39923392, lng: 2.1787262},color: 'yellow',user: '150619600 936202162786496512 ·+',application: '???',time: 'Thu Nov 30 11:56:04 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 2) <a href="https://t.co/CbKsgATf70" target="_blank"> link </a>Venta y Alquiler RODILLERA CONTROL FLEXO-EXTENCIÓN en Ortopedia + Avis <a href="https://t.co/km9nsLMqDY" target="_blank"> link </a>',},
+
+
+
+
+
+  id936202421654704128: {center: {lat: 41.36437281, lng: 2.15275856},color: 'yellow',user: 'nugoleta 936202421654704128 ·+',application: '???',time: 'Thu Nov 30 11:57:05 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 1, ORG: 0, URL: 1) Preparant el dream big challenge! #ifestcat emprencat en Palau Sant Jordi <a href="https://t.co/D2ShSZryUb" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+  id936202605016969216: {center: {lat: 41.3850639, lng: 2.1734035},color: 'green',user: 'tmj_spn_eng 936202605016969216 ·+',application: '???',time: 'Thu Nov 30 11:57:49 +0000 2017',text: '(SENT: POS, LOC: 2, PER: 0, ORG: 1, URL: 2) Want to work at General Electric? We re #hiring in #Barcelona, CT! Click for details: <a href="https://t.co/YnZvREX417…" target="_blank"> link </a><a href="https://t.co/zWRjhTI0mC" target="_blank"> link </a>',},
+  id936202613204377601: {center: {lat: 41.3879, lng: 2.16992},color: 'yellow',user: 'TrendsBarcelona 936202613204377601 ·+',application: '???',time: 'Thu Nov 30 11:57:51 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 1, ORG: 0, URL: 2)  iluso  es ahora una tendencia en #Barcelona  <a href="https://t.co/Kiy34a87vc" target="_blank"> link </a><a href="https://t.co/1FVd2jWNQx" target="_blank"> link </a>',},
+
+
+
+
+
+  id936202763268214785: {center: {lat: 41.39593, lng: 2.14034},color: 'yellow',user: 'RiCCaRdo_LOPeZ_ 936202763268214785 ·+',application: '???',time: 'Thu Nov 30 11:58:27 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) My way The Cave #underground #artlife #production #days @ White Rabbit Art <a href="https://t.co/2WMwOeT6rX" target="_blank"> link </a>',},
+
+  id936202772915113988: {center: {lat: 41.39440355, lng: 2.16084987},color: 'yellow',user: 'whereissusie 936202772915113988 ·+',application: '???',time: 'Thu Nov 30 11:58:29 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) またきた (@ Superdry Store in Barcrelona, CT) <a href="https://t.co/HMMrk4y1dF" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+  id936203041144999936: {center: {lat: 41.38463, lng: 2.18156},color: 'yellow',user: 'cinemaniac1983 936203041144999936 ·+',application: '???',time: 'Thu Nov 30 11:59:33 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) 📜📜📜📜📜📜📜📜📜📜📜📜 To see a world in a grain of sand and heaven in a wild flower, hold infinity in the… <a href="https://t.co/xq9HbES6rm" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+  id936203157897609216: {center: {lat: 41.385064, lng: 2.173403},color: 'yellow',user: 'toolows 936203157897609216 ·+',application: '???',time: 'Thu Nov 30 12:00:01 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 1, URL: 1) ¿Perjudica realmente en algo a YouTube que las marcas anuncien boicots? <a href="https://t.co/iOr34VlTHr" target="_blank"> link </a>',},
+  id936203161093726209: {center: {lat: 41.384445, lng: 2.133314},color: 'yellow',user: 'felinaBarcelona 936203161093726209 ·+',application: '???',time: 'Thu Nov 30 12:00:02 +0000 2017',text: '(SENT: NEU, LOC: 2, PER: 6, ORG: 0, URL: 1) #Escorts esta tarde en #Barcelona: Ana, Anaïs, Andrea, Arlette, Aurora, Bea, Catalina, Chantal, Denisse, Elena <a href="https://t.co/SFDeDTXDS9" target="_blank"> link </a>',},
+  id936203171692711937: {center: {lat: 41.384445, lng: 2.133314},color: 'yellow',user: 'felinaBarcelona 936203171692711937 ·+',application: '???',time: 'Thu Nov 30 12:00:04 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 5, ORG: 0, URL: 1) Y también: Kenia, Laura, Lorena, Luna, Miranda, Montserrat, Paula <a href="https://t.co/SFDeDTXDS9" target="_blank"> link </a>',},
+
+
+  id936203350286131201: {center: {lat: 41.4, lng: 2.15},color: 'yellow',user: 'BarcelonaCT 936203350286131201 ·+',application: '???',time: 'Thu Nov 30 12:00:47 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 0) temperature up 3°C -> 11°C humidity down 86% -> 40% wind 1kmh -> 2kmh ',},
+
+  id936203405944672261: {center: {lat: 41.3833, lng: 2.18333},color: 'green',user: 'martinbrownart 936203405944672261 ·+',application: '???',time: 'Thu Nov 30 12:01:00 +0000 2017',text: '(SENT: POS, LOC: 2, PER: 0, ORG: 0, URL: 1) From here to there #barcelona #spain #españa #architecture #plants #ilovespain #love #thursday @… <a href="https://t.co/DqKzKGfJPl" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+  id936203566020251648: {center: {lat: 41.4140243, lng: 2.15241909},color: 'yellow',user: 'theresaDesigner 936203566020251648 ·+',application: '???',time: 'Thu Nov 30 12:01:38 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 0, ORG: 0, URL: 1) I m at Parque Güell in Barcelona w/ @lazyros <a href="https://t.co/wwJLTNXQnN" target="_blank"> link </a>',},
+
+  id936203598437994498: {center: {lat: 41.3833, lng: 2.18333},color: 'yellow',user: 'KaiqueBeatto 936203598437994498 ·+',application: '???',time: 'Thu Nov 30 12:01:46 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 0, ORG: 0, URL: 1) Bom dia pra quem acordou TriCampeão da América!!! Real Madrid, se cuide que meu Grêmio já… <a href="https://t.co/cUCr6dSMAQ" target="_blank"> link </a>',},
+
+
+
+
+  id936203742323642369: {center: {lat: 41.3833, lng: 2.18333},color: 'yellow',user: 'turacben 936203742323642369 ·+',application: '???',time: 'Thu Nov 30 12:02:20 +0000 2017',text: '(SENT: NEU, LOC: 4, PER: 0, ORG: 0, URL: 1) #tbt #spain #barcelona #analog 📸 🖤 @ Barcelona, Spain <a href="https://t.co/X5DF9nIqhl" target="_blank"> link </a>',},
+
+  id936203787076866048: {center: {lat: 41.37373603, lng: 2.14286083},color: 'yellow',user: 'EmebEscuela 936203787076866048 ·+',application: '???',time: 'Thu Nov 30 12:02:31 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 1, ORG: 0, URL: 1) Últimos apuntes antes del examen de certificación. #mecanicadebicicletas en EMEB - Escuela de… <a href="https://t.co/wsu3QA56fA" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+  id936204159530995713: {center: {lat: 41.39778, lng: 2.16569},color: 'yellow',user: 'AncestralBarBCN 936204159530995713 ·+',application: '???',time: 'Thu Nov 30 12:04:00 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) Pollo al curry en Ancestral Bar #croquetas #tortilla #empanadas #sparklingwine #croqueta… <a href="https://t.co/JJTRQrZV3V" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id936204440763355136: {center: {lat: 41.363473, lng: 2.165827},color: 'yellow',user: 'maxiibarra 936204440763355136 ·+',application: '???',time: 'Thu Nov 30 12:05:07 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 0, ORG: 0, URL: 1) #barcelona en Castillo de Montjuic <a href="https://t.co/1GvdI4vvI6" target="_blank"> link </a>',},
+  id936204486812381184: {center: {lat: 41.38480868, lng: 2.16811342},color: 'yellow',user: 'totonieves 936204486812381184 ·+',application: '???',time: 'Thu Nov 30 12:05:18 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 0, ORG: 0, URL: 1) #home #sunny #day #sofa #coffee #time #cafe #onedaymore #onedayleft #raval #barcelona #barna… <a href="https://t.co/csLjjguCDj" target="_blank"> link </a>',},
+
+
+
+  id936204633911054336: {center: {lat: 41.37160157, lng: 2.14054495},color: 'yellow',user: 'ZuccatoBcn 936204633911054336 ·+',application: '???',time: 'Thu Nov 30 12:05:53 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) Menú Dia 30/11/2017  Menú complert 10,00€ iva inc. 1/2 Menú 7,00€ iva… <a href="https://t.co/owjHMlw4vr" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  id936205398943641600: {center: {lat: 41.38030883, lng: 2.12569972},color: 'green',user: 'Grettux_MG 936205398943641600 ·+',application: '???',time: 'Thu Nov 30 12:08:55 +0000 2017',text: '(SENT: POS, LOC: 2, PER: 0, ORG: 0, URL: 1) 03/2017 Who loved Barcelona? Me! #europepics #spainsquare @ Plaza España Barcelona. Palacio Real <a href="https://t.co/aL4Vf7N1SZ" target="_blank"> link </a>',},
+
+
+  id936205450147745792: {center: {lat: 41.37231827, lng: 2.176018},color: 'yellow',user: 'InformacionDGT 936205450147745792 ·+',application: '???',time: 'Thu Nov 30 12:09:07 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 0, ORG: 0, URL: 1) #RETENCIÓN nivel ROJO en #B10 (pk 11.5 al 5.5 sur) BARCELONA #DGTBarcelona #DGT <a href="https://t.co/MYW9CCpLd6" target="_blank"> link </a>',},
+
+
+
+
+  id936205673297317888: {center: {lat: 41.385064, lng: 2.173403},color: 'yellow',user: 'toolows 936205673297317888 ·+',application: '???',time: 'Thu Nov 30 12:10:01 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 1) Hoy es el último día para poder aprender todo sobre un buen brief <a href="https://t.co/sQTsC6Oq4R" target="_blank"> link </a>',},
+
+
+
+
+
+
+
+  id936205875693338624: {center: {lat: 41.3857, lng: 2.17},color: 'yellow',user: 'trendinaliaBCN 936205875693338624 ·+',application: '???',time: 'Thu Nov 30 12:10:49 +0000 2017',text: '(SENT: NEU, LOC: 0, PER: 0, ORG: 0, URL: 2) #DerechosEnRiesgo apareix en aquest moment com Trending Topic (6). Mes tendències <a href="https://t.co/mU6NpaPgbF" target="_blank"> link </a>#trndnl <a href="https://t.co/uBA0c0nyG1" target="_blank"> link </a>',},
+
+
+
+
+
+
+  id936206010556997632: {center: {lat: 41.40441, lng: 2.20827},color: 'yellow',user: 'josegamboarrpp 936206010556997632 ·+',application: '???',time: 'Thu Nov 30 12:11:21 +0000 2017',text: '(SENT: NEU, LOC: 1, PER: 0, ORG: 0, URL: 1) Malandrina Resto - Bar Poble nou Bac de Roda 38 Tlf:+34937825785… <a href="https://t.co/7U7oVOK1Yf" target="_blank"> link </a>',},
+
+
+
+
+
+};
+
+function showNewRect(user, device, time, text) {
+  	//alert(this.fillColor);
+	//alert(x);
+	document.getElementById('info').innerHTML = 
+							"<b>User:</b> <a href=\"https://twitter.com/"+user+"\" target=\"_blank\">"+user+"</a>"+
+							'<br><b>Application: </b>' + device +
+							'<br><b>Time: </b>' + time +
+							'<br><b>Text: </b>' + text;
+                                      
+}
+
+function initMap() {
+  // Create the map.
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: {lat: 41.403184, lng: 2.187346},
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  // Construct the circle for each value in citymap.
+  // Note: We scale the area of the circle based on the population.
+  for (var city in citymap) {
+    // Add the circle for this city to the map.
+    var cityCircle = new google.maps.Circle({
+      strokeColor: citymap[city].color,
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: citymap[city].color,
+      fillOpacity: 0.35,
+      map: map,
+      center: citymap[city].center,
+      radius: 50
+    });
+
+	//cityCircle.addListener('click', showNewRect);
+
+ 	var createCallback = function(innerCity){
+    	return function() {showNewRect(	citymap[innerCity].user,
+										citymap[innerCity].device,
+										citymap[innerCity].time, 
+										citymap[innerCity].text);};
+	};
+
+    cityCircle.addListener("click", createCallback(city), false);
+
+  }
+
+}
+
+var createAdd = function () {
+    var counter = 0;
+    return function () {return counter += 1;}
+};
+
+var add = createAdd();
+
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwj9LiVBW4-eKfHNSCMY2HLUndhHkEXZ8&signed_in=true&callback=initMap"></script>
+  </body>
+</html>

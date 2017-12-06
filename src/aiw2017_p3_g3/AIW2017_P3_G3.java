@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package aiw2017_p3_g3;
+import maps.CreateMapToWork;
 
 /**
  *
@@ -15,6 +16,7 @@ public class AIW2017_P3_G3 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        CreateMapToWork.main(null);
         // TODO code application logic here
     }
     

@@ -133,9 +133,6 @@ public class CreateMapToWork {
                             //Compute sentiment of tweet
                             sentiLabel=Sentiment(d);
                             
-                            if(sentiLabel.equals("positive") | sentiLabel.equals("negative")){
-                               System.out.println(sentiLabel + " :" + floc);
-                            }
                             
                             //---- HEAT MAP ----
                             newTextHeat = "new google.maps.LatLng("+lati+","+longi+"),";
@@ -151,18 +148,28 @@ public class CreateMapToWork {
                                     else newtext += token + " ";
                             }
                             // TO COMPLETE  change color according to sentiment
-                            // IF CODE HERE 
+                            // IF CODE HERE
+                            
+                            if (sentiLabel.equals("POS")){
+                                color = "green";
+                            } else if (sentiLabel.equals("NEG")){
+                                color = "red";
+                            } else if (sentiLabel.equals("NEU")) {
+                                color = "yellow";
+                            }
                                    
-                        
                             newTextCircle = "  id"+ id +": {center: {lat: "+ lati +", lng: "+longi+"},"+
                                     
-							"color: '" +color+"',"+
-							"user: '"  +usrName+" "+id+" ·+',"+
-                                    "application: '"+app+"',"+
-							"time: '"  +creation+"',"+
-							"text: '(SENT: "+sentiLabel+", Locations:....) "  +newtext+"',"+
-                                                    
-							"},";
+                                            "color: '" +color+"',"+
+                                            "user: '"  +usrName+" "+id+" ·+',"+
+                                            "application: '"+app+"',"+
+                                            "time: '"  +creation+"',"+
+                                            "text: '(SENT: "+sentiLabel+", LOC: " + num_locs +
+                                            ", PER: " + num_pers + ", ORG: " + num_orgs +
+                                            ", URL: " + num_urls +
+                                            ") "  +newtext+"',"+
+
+                                            "},";
                                                 
                         }
                         textToWriteHeat=textToWriteHeat +  newTextHeat + "\n";
@@ -173,8 +180,8 @@ public class CreateMapToWork {
                     
                    
                     
-                    String inputFileHeat = "resources" + fs + "maps"+fs+ "heat-map.html";
-                    String inputFileCircle = "resources" + fs + "maps"+fs+ "circle-map.html";
+                    String inputFileHeat = "maps"+fs+ "heat-map.html";
+                    String inputFileCircle = "maps"+fs+ "circle-map.html";
                     
                   
                               
@@ -191,6 +198,7 @@ public class CreateMapToWork {
         public static int NumLocs(Document doc) {
             return doc.getAnnotations().get("Location").size();
         }
+        
         // TO COMPLETE
         // Returns POS, NEG o NEU
         public static String Sentiment(Document doc) {
@@ -213,11 +221,11 @@ public class CreateMapToWork {
                 }
             }
             if(senti<0){
-                sentiment = "negative";
+                sentiment = "NEG";
             } else if (senti > 0) {
-                sentiment = "positive";
+                sentiment = "POS";
             } else {
-                sentiment = "neutral";
+                sentiment = "NEU";
             }
             return sentiment;
         }
