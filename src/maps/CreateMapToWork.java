@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import twitter4j.GeoLocation;
 import twitter4j.Status;
@@ -106,7 +108,9 @@ public class CreateMapToWork {
                         usrName=(String) mp_usr.get("screen_name");
                         
                         // TO COMPLETE: extract app used to tweet!!!
-                        
+                        String rawApp = fm.get("source").toString();
+                        int firstClosingTag = rawApp.indexOf(">");
+                        app = rawApp.substring(firstClosingTag+1,rawApp.indexOf("<", firstClosingTag));
                         
                         text=d.getContent().toString();
                         if(mp!=null) {
@@ -161,7 +165,7 @@ public class CreateMapToWork {
                             newTextCircle = "  id"+ id +": {center: {lat: "+ lati +", lng: "+longi+"},"+
                                     
                                             "color: '" +color+"',"+
-                                            "user: '"  +usrName+" "+id+" ·+',"+
+                                            "user: '"  +usrName+"',"+//" "+id+" ·+',"+
                                             "application: '"+app+"',"+
                                             "time: '"  +creation+"',"+
                                             "text: '(SENT: "+sentiLabel+", LOC: " + num_locs +
